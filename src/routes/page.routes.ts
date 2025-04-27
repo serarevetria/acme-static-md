@@ -17,7 +17,9 @@ const upload = multer({
     if (file.mimetype === "text/markdown") {
       cb(null, true);
     } else {
-      cb(new Error("Only markdown files are allowed!"));
+      const error = new multer.MulterError('LIMIT_UNEXPECTED_FILE');
+      error.message = 'Only markdown files are allowed.';
+      cb(error);
     }
   },
 });

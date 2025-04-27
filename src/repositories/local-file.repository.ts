@@ -1,12 +1,14 @@
+import { dirname, join, normalize } from "path";
 import { promises as fs } from "fs";
-import { join, normalize } from "path";
 import { PageRepository } from "./page.repository";
 
 export class LocalFileRepository implements PageRepository {
   private basePath: string;
 
   constructor() {
-    this.basePath = join(__dirname, "..", "content");
+    this.basePath = process.env.CONTENT_DIR
+      ? join(process.cwd(), process.env.CONTENT_DIR)
+      : join(__dirname, '..', 'content');
   }
 
   async save(path: string, content: string): Promise<void> {
@@ -15,7 +17,8 @@ export class LocalFileRepository implements PageRepository {
     const targetDir = join(this.basePath, normalizedPath);
     const targetFile = join(targetDir, "index.md");
 
-    await fs.mkdir(targetDir, { recursive: true });
+    await fs.mkdir(dirname(targetFile), { recursive: true });
+
     await fs.writeFile(targetFile, content, "utf-8");
   }
 
