@@ -9,6 +9,16 @@ export class LocalFileRepository implements PageRepository {
     this.basePath = process.env.CONTENT_DIR
       ? join(process.cwd(), process.env.CONTENT_DIR)
       : join(__dirname, '..', 'content');
+    this.ensureContentFolderExists()
+  }
+
+  private async ensureContentFolderExists() {
+    try {
+      await fs.mkdir(this.basePath, { recursive: true });
+    } catch (error) {
+      console.error('[LocalFileRepository] Failed to create content folder:', error);
+      throw error;
+    }
   }
 
   async save(path: string, content: string): Promise<void> {
