@@ -14,15 +14,20 @@ const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
-    if (file.mimetype === "text/markdown") {
+    const allowedExtensions = ['.md'];
+
+    const isMarkdown = allowedExtensions.some(ext =>
+      file.originalname.toLowerCase().endsWith(ext)
+    );
+
+    if (isMarkdown) {
       cb(null, true);
     } else {
-      const error = new multer.MulterError('LIMIT_UNEXPECTED_FILE');
-      error.message = 'Only markdown files are allowed.';
-      cb(error);
+      cb(new Error('Only markdown (.md) files are allowed!'));
     }
   },
 });
+
 
 router.get("/", getAllPages);
 
