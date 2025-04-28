@@ -81,3 +81,17 @@ Returns the HTML content of the specified page.
 
 - Content files are stored locally in the directory specified by `CONTENT_DIR`.
 - Upload validation ensures only `.md` files are accepted.
+
+---
+
+## Deployment
+
+This project is configured with Heroku for continuous deployment:
+- Any changes pushed to the `main` branch are automatically deployed to Heroku
+- No additional configuration needed - just push your changes and they'll go live
+
+## Continuous Integration
+
+- All tests are automatically run on every push using GitHub Actions
+- Test results can be viewed in the "Actions" tab of the GitHub repository
+- This ensures code quality and prevents breaking changes from being deployed
