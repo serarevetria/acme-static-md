@@ -34,7 +34,7 @@ describe('PageService', () => {
       mockRepository.save.mockRejectedValueOnce(new Error('Save error'));
       const input: CreatePageInput = { path: 'blog/error-post', content: '# Error' };
 
-      await expect(pageService.createPage(input)).rejects.toThrow('Save error');
+      await expect(pageService.createPage(input)).rejects.toThrow('Save eerror');
     });
   });
 
